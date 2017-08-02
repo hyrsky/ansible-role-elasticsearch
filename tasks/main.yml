@@ -5,6 +5,15 @@
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- name: Configure Elasticsearch jvm
+  template:
+    src: jvm.options.j2
+    dest: /etc/elasticsearch/jvm.options
+    owner: root
+    group: elasticsearch
+    mode: 0750
+  notify: restart elasticsearch
+
 - name: Configure Elasticsearch.
   template:
     src: elasticsearch.yml.j2
